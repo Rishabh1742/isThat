@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #1c1330;
+    --night-deep: #120c1f;
+    --gold: #e8b86d;
+    --blush: #f4d9d0;
+    --cream: #f7f1ea;
+    --line: rgba(247, 241, 234, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: radial-gradient(ellipse at top, #2a1d45 0%, var(--night) 45%, var(--night-deep) 100%);
+    font-family: 'Poppins', sans-serif;
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  /* ambient stars */
+  #stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--cream);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.8; }
+  }
+
+  .stage {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    animation: rise 0.9s ease both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(28px, 6vw, 42px);
+    line-height: 1.25;
+    margin: 0 0 14px;
+  }
+
+  .sub {
+    font-size: 15px;
+    color: var(--blush);
+    line-height: 1.7;
+    margin: 0 0 40px;
+    font-weight: 300;
+  }
+
+  .name-fill {
+    color: var(--gold);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .btn-row {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+  }
+
+  .yes-btn {
+    background: linear-gradient(135deg, var(--gold), #d99a4e);
+    color: var(--night-deep);
+    border: none;
+    padding: 16px 38px;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 24px rgba(232, 184, 109, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .yes-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(232, 184, 109, 0.4);
+  }
+
+  .no-btn {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--line);
+    padding: 16px 30px;
+    border-radius: 100px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    position: absolute;
+    transition: left 0.25s ease, top 0.25s ease, transform 0.15s ease;
+  }
+
+  .hint {
+    margin-top: 26px;
+    font-size: 12px;
+    color: rgba(247, 241, 234, 0.4);
+    font-style: italic;
+    min-height: 16px;
+  }
+
+  /* ---- reveal screen ---- */
+  #screen2 { display: none; }
+
+  .heart-divider {
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 22px;
+    letter-spacing: 0.4em;
+  }
+
+  .letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(19px, 3.6vw, 23px);
+    line-height: 1.9;
+    color: var(--cream);
+    text-align: left;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 32px 28px;
+    margin-bottom: 28px;
+  }
+
+  .letter em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .song-note {
+    font-size: 13px;
+    color: var(--blush);
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .song-link {
+    display: inline-block;
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+    transition: opacity 0.2s ease;
+  }
+  .song-link:hover { opacity: 0.75; }
+
+  .signoff {
+    margin-top: 34px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--blush);
+  }
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<div class="stage">
+
+  <!-- SCREEN 1 -->
+  <div class="card" id="screen1">
+    <div class="eyebrow">A small question</div>
+    <h1>Hey <span class="name-fill">Menka</span> — can I tell you something?</h1>
+    <p class="sub">
+      You have this way of making ordinary days feel a little less ordinary.
+      I've been meaning to say that for a while.
+    </p>
+
+    <div class="btn-row" id="btnRow">
+      <button class="yes-btn" onclick="reveal()">yes, tell me 💛</button>
+      <button class="no-btn" id="noBtn" onmouseover="dodge()" onclick="dodge()">not now</button>
+    </div>
+    <div class="hint" id="hint"></div>
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div class="card" id="screen2">
+    <div class="heart-divider">· · ·</div>
+    <div class="letter">
+      I'm not trying to make this a big declaration — I just didn't want another day
+      to pass without you knowing. <em>You're one of the good things I think about
+      when my mind wanders.</em> The kind of person I want to keep showing up for,
+      even from far away. So here's a small effort, sent your way — no pressure
+      on what it means, just wanted you to feel it.
+    </div>
+
+    <div class="song-note">a song that made me think of you</div>
+    <a class="song-link" href="https://open.spotify.com/track/50OY8dCaVyRgNn6hBSnBB4" id="songLink" target="_blank" rel="noopener">▶ Darasal</a>
+
+    <div class="signoff">— from someone who's smiling writing this</div>
+  </div>
+
+</div>
+
+<script>
+  // ambient stars
+  const starField = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top = Math.random() * 100 + '%';
+    s.style.animationDelay = (Math.random() * 3.5) + 's';
+    starField.appendChild(s);
+  }
+
+  const hints = [
+    "nice try 😏",
+    "nope, try again",
+    "that button's shy",
+    "it really doesn't want to be clicked",
+    "okay now you're just chasing it"
+  ];
+  let hintIndex = 0;
+
+  function dodge() {
+    const row = document.getElementById('btnRow');
+    const btn = document.getElementById('noBtn');
+    const rowRect = row.getBoundingClientRect();
+    const btnW = btn.offsetWidth;
+    const btnH = btn.offsetHeight;
+
+    const maxX = rowRect.width - btnW;
+    const maxY = rowRect.height - btnH;
+
+    const newX = Math.max(0, Math.random() * maxX);
+    const newY = Math.max(0, Math.random() * maxY);
+
+    btn.style.position = 'absolute';
+    btn.style.left = newX + 'px';
+    btn.style.top = newY + 'px';
+
+    document.getElementById('hint').textContent = hints[hintIndex % hints.length];
+    hintIndex++;
+  }
+
+  function reveal() {
+    document.getElementById('screen1').style.display = 'none';
+    document.getElementById('screen2').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
